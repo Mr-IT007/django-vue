@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==2.0.8"
+django-redis = "==4.10.0"
+djangorestframework = "==3.8.2"
+pymysql = "*"
+django-cors-headers = "==2.4.0"
+djangorestframework-jwt = "*"
+django-rest-swagger = "*"
+django-shortuuidfield = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
