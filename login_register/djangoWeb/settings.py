@@ -165,10 +165,11 @@ REST_FRAMEWORK = {
     #     'anon': '10/day',
     #     'user': '1000/day'
     # },
+    'EXCEPTION_HANDLER': 'apps.userAuth.utils.define_exception_handler'
 }
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=2),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=24),
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps.userAuth.utils.jwt_response_payload_handler',
 }
 

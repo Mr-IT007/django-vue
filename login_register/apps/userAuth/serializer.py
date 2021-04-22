@@ -40,12 +40,28 @@ class JWTSerializer(JSONWebTokenSerializer):
             raise serializers.ValidationError(msg)
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class FieldsRequiredModelSerializer(serializers.ModelSerializer):
+
+    def get_field_names(self, declared_fields, info):
+        fields = super().get_field_names(declared_fields, info)
+
+        request = self.context.get('request')
+        require_params = request.query_params.get('require')
+        fields = (set(fields) & set(require_params.split(','))) if require_params else fields
+
+        exclude_params = request.query_params.get('exclude')
+        fields = (set(fields) - set(exclude_params.split(','))) if exclude_params else fields
+
+        return fields
+
+
+class UserProfileSerializer(FieldsRequiredModelSerializer):
     code = serializers.CharField(max_length=6, min_length=6, read_only=True)
 
     class Meta:
         model = UserProfile
         fields = serializers.ALL_FIELDS
+        # fields = ('uid', 'username', 'phone', 'email', 'last_login', 'code')
         extra_kwargs = {
             'password': {
                 'write_only': True
